@@ -58,8 +58,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://disc.sci.gsfc.nasa.gov/datasets?keywords=NLDAS',
     },
   ],
+  'gee:categories': ['climate', 'precipitation', 'soil', 'water-vapor'],
   keywords: [
-    'climate',
     'evaporation',
     'forcing',
     'geophysical',
@@ -68,7 +68,6 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'ldas',
     'nasa',
     'nldas',
-    'precipitation',
     'pressure',
     'radiation',
     'temperature',
@@ -259,7 +258,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     Distribution of data from the Goddard Earth Sciences
     Data and Information Services Center (GES DISC) is funded by NASA's
     Science Mission Directorate (SMD). Consistent with NASA [Earth
-    Science Data and Information Policy](https://science.nasa.gov/earth-science/earth-science-data/data-information-policy/),
+    Science Data and Information Policy](https://www.earthdata.nasa.gov/engage/open-data-services-and-software/data-and-information-policy/),
     data from the GES DISC archive are available free to the user community.
     For more information visit the GES DISC [Data Policy](https://disc.sci.gsfc.nasa.gov/citing)
     page.

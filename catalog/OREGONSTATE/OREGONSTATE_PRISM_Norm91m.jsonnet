@@ -8,8 +8,8 @@ local units = import 'units.libsonnet';
 local versions = import 'versions.libsonnet';
 local prism = import 'OREGONSTATE_PRISM_Norm.libsonnet';
 
-local version = '91m';
-local version_config = versions(subdir, prism.versions, version);
+local version_config = versions(subdir, prism.versions, id);
+local version = version_config.version;
 
 local license = spdx.proprietary;
 
@@ -47,6 +47,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   links: ee.standardLinks(subdir, id) + [
     ee.link.license(prism.license_link)
   ] + version_config.version_links,
+  'gee:categories': ['climate'],
   keywords: [
     '30_year',
     'climate',

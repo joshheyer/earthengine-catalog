@@ -52,6 +52,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://doi.org/10.5067/COMMUNITY/ASTER_GED/AG100.003',
     },
   ],
+  'gee:categories': ['satellite-imagery'],
   keywords: [
     'aster',
     'caltech',
@@ -313,7 +314,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ASTER data and products distributed by the LP DAAC, with the exception of
     the ASTER Global Digital Elevation Model (GDEM) dataset (ASTGTM) version 2
     (v2), have no restrictions on data use, sale, or subsequent redistribution.
-    For more information visit the [ASTER Policies]
-    (https://lpdaac.usgs.gov/data/data-citation-and-policies/) site.
+    For more information visit the
+    [ASTER Policies](https://lpdaac.usgs.gov/data/data-citation-and-policies/) site.
   |||,
 }

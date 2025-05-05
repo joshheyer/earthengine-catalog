@@ -1,28 +1,19 @@
 local id = 'USGS/NLCD';
+local versions = import 'versions.libsonnet';
+local version_table = import 'templates/NLCD_versions.libsonnet';
+
 local subdir = 'USGS';
 
 // TODO(b/195835158): set latest to USGS/NLCD_RELEASES/2019_REL/NLCD
-local latest_id = 'USGS/NLCD_RELEASES/2016_REL';
-local successor_id = 'USGS/NLCD_RELEASES/2016_REL';
 
 local ee_const = import 'earthengine_const.libsonnet';
 local ee = import 'earthengine.libsonnet';
 local spdx = import 'spdx.libsonnet';
 local units = import 'units.libsonnet';
+local version_config = versions(subdir, version_table, id);
+local version = version_config.version;
 
 local license = spdx.cc0_1_0;
-
-local basename = std.strReplace(id, '/', '_');
-local latest_basename = std.strReplace(latest_id, '/', '_');
-local successor_basename = std.strReplace(successor_id, '/', '_');
-local base_filename = basename + '.json';
-local latest_filename = latest_basename + '.json';
-local successor_filename = successor_basename + '.json';
-local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
-
-local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
-local latest_url = catalog_subdir_url + latest_filename;
-local successor_url = catalog_subdir_url + successor_filename;
 
 {
   stac_version: ee_const.stac_version,
@@ -34,7 +25,8 @@ local successor_url = catalog_subdir_url + successor_filename;
   ],
   id: id,
   title: 'NLCD: USGS National Land Cover Database [deprecated]',
-  deprecated: true,
+  version: version,
+  'gee:status': 'deprecated',
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
     This dataset is superseded by newer datasets:
@@ -43,8 +35,6 @@ local successor_url = catalog_subdir_url + successor_filename;
       [USGS/NLCD_RELEASES/2019_REL/NLCD](USGS_NLCD_RELEASES_2019_REL_NLCD).
     * 2019 landcover and imperviousness data in
       [USGS/NLCD_RELEASES/2019_REL/NLCD](USGS_NLCD_RELEASES_2019_REL_NLCD).
-    * 2019 rangeland data in
-      [USGS/NLCD_RELEASES/2019_REL/RCMAP/V4/COVER](USGS_NLCD_RELEASES_2019_REL_RCMAP_V4_COVER).
 
     NLCD (the National Land Cover Database) is a 30-m Landsat-based land cover
     database spanning 8 epochs (1992, 2001, 2004, 2006, 2008, 2011, 2013 and 2016).
@@ -76,10 +66,8 @@ local successor_url = catalog_subdir_url + successor_filename;
     U.S. Geological Survey.
   |||,
   license: license.id,
-  links: ee.standardLinks(subdir, id) + [
-    ee.link.latest(latest_id, latest_url),
-    ee.link.successor(successor_id, successor_url),
-  ],
+  links: ee.standardLinks(subdir, id) + version_config.version_links,
+  'gee:categories': ['landuse-landcover'],
   keywords: [
     'blm',
     'landcover',
@@ -91,7 +79,7 @@ local successor_url = catalog_subdir_url + successor_filename;
   ],
   providers: [
     ee.producer_provider('USGS', 'https://www.mrlc.gov'),
-    ee.host_provider(self_ee_catalog_url),
+    ee.host_provider(version_config.ee_catalog_url),
   ],
   extent: ee.extent(-130.24, 21.75, -63.66, 57.68,
                     '1992-01-01T00:00:00Z', '2017-01-01T00:00:00Z'),
@@ -538,14 +526,13 @@ local successor_url = catalog_subdir_url + successor_filename;
     Yang, L., Jin, S., Danielson, P., Homer, C., Gass, L., Case, A.,
     Costello, C., Dewitz, J., Fry, J., Funk, M., Grannemann, B., Rigge,
     M. and G. Xian. 2018,
-    [A New Generation of the United States National Land Cover Database: Requirements, Research Priorities, Design, and Implementation Strategies]
-    (https://www.sciencedirect.com/science/article/abs/pii/S092427161830251X), p. 108-123.
+    [A New Generation of the United States National Land Cover Database: Requirements, Research Priorities, Design, and Implementation Strategies](https://www.sciencedirect.com/science/article/abs/pii/S092427161830251X), p. 108-123.
   |||,
   'gee:terms_of_use': |||
     Most U.S. Geological Survey (USGS) information resides
     in the public domain and may be used without restriction. Additional
-    information on [Acknowledging or Crediting USGS as Information
-    Source](https://www.usgs.gov/information-policies-and-instructions/crediting-usgs) is available.
+    information on
+    [Acknowledging or Crediting USGS as Information Source](https://www.usgs.gov/information-policies-and-instructions/crediting-usgs)
+    is available.
   |||,
-  version: ee_const.version_unknown,
 }

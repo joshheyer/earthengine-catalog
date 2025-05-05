@@ -1,5 +1,5 @@
 # Earth Engine Public Data Catalog STAC checker.
-
+load("@pip//:requirements.bzl", "requirement")
 package(default_visibility = ["//visibility:public"])
 
 py_binary(
@@ -10,6 +10,7 @@ py_binary(
         ":stac",
         "//checker/node",
         "//checker/tree",
+        requirement("absl-py")
     ],
 )
 
@@ -50,7 +51,10 @@ py_library(
 py_test(
     name = "stac_test",
     srcs = ["stac_test.py"],
-    deps = [":stac"],
+    deps = [
+        ":stac",
+        requirement("absl-py")
+    ],
 )
 
 py_library(
@@ -67,5 +71,6 @@ py_test(
     deps = [
         ":stac",
         ":test_utils",
+        requirement("absl-py")
     ],
 )

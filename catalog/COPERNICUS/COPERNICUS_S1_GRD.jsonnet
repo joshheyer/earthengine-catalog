@@ -40,7 +40,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     for details of collection use and preprocessing. Each scene contains
     either 1 or 2 out of 4 possible polarization bands, depending
     on the instrument's polarization settings.  The possible combinations
-    are single band VV or HH, and dual band VV+VH and HH+HV:
+    are single band VV, single band HH, dual band VV+VH, and dual band HH+HV:
 
       1. VV: single co-polarization, vertical transmit/vertical receive
       2. HH: single co-polarization, horizontal transmit/horizontal receive
@@ -79,6 +79,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['satellite-imagery'],
   keywords: [
     'backscatter',
     'copernicus',
@@ -233,6 +234,11 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
         name: 'platform_number',
         description: 'The alphanumeric identifier of the platform within the mission.',
         type: ee_const.var_type.string,
+      },
+      {
+        name: 'platformHeading',
+        description: 'Platform heading relative to North, degrees',
+        type: ee_const.var_type.double,
       },
       {
         name: 'instrument',
@@ -499,7 +505,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   'gee:interval': {
     type: 'revisit_interval',
     unit: 'day',
-    interval: 3,
+    // 6 days in the best case when two S1 satellites are up.
+    interval: 6,
   },
   'gee:terms_of_use': |||
     The use of Sentinel data is governed by the [Copernicus

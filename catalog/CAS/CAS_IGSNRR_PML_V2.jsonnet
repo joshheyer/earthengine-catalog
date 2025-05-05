@@ -1,28 +1,17 @@
 local id = 'CAS/IGSNRR/PML/V2';
-local latest_id = 'CAS/IGSNRR/PML/V2_v017';
-local successor_id = 'CAS/IGSNRR/PML/V2_v017';
+local versions = import 'versions.libsonnet';
+local version_table = import 'templates/IGSNRR_PML_versions.libsonnet';
+
 local subdir = 'CAS';
 
 local ee_const = import 'earthengine_const.libsonnet';
 local ee = import 'earthengine.libsonnet';
 local spdx = import 'spdx.libsonnet';
+local version_config = versions(subdir, version_table, id);
+local version = version_config.version;
 local units = import 'units.libsonnet';
 
 local license = spdx.cc_by_4_0;
-local version = '0.1.4';
-
-local basename = std.strReplace(id, '/', '_');
-local latest_basename = std.strReplace(latest_id, '/', '_');
-local successor_basename = std.strReplace(successor_id, '/', '_');
-
-local base_filename = basename + '.json';
-local latest_filename = latest_basename + '.json';
-local successor_filename = successor_basename + '.json';
-
-local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
-local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
-local latest_url = catalog_subdir_url + latest_filename;
-local successor_url = catalog_subdir_url + successor_filename;
 
 {
   stac_version: ee_const.stac_version,
@@ -35,9 +24,9 @@ local successor_url = catalog_subdir_url + successor_filename;
   id: id,
   title:
     'PML_V2 ' + version +
-    ': Coupled Evapotranspiration and Gross Primary Product (GPP) [deprecated]',
+    ': Coupled Evapotranspiration and Gross Primary Production (GPP) [deprecated]',
   version: version,
-  deprecated: true,
+  'gee:status': 'deprecated',
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
     Penman-Monteith-Leuning Evapotranspiration V2 (PML_V2) products include
@@ -53,27 +42,20 @@ local successor_url = catalog_subdir_url + successor_filename;
        rainfall from vegetation (Zhang et al., 2016).
 
     The PML_V2 products perform well against observations
-    at 95 flux sites across globe, and are similar to or noticeably better than
+    at 95 flux sites across the globe, and are similar to or noticeably better than
     major state-of-the-art ET and GPP products widely used by water and ecology
-    science communities (Zhang et al., 2019).
+    research communities (Zhang et al., 2019).
   |||,
   license: license.id,
-  links: ee.standardLinks(subdir, id) + [
-    ee.link.latest(latest_id, latest_url),
-    ee.link.successor(successor_id, successor_url),
-  ],
+  links: ee.standardLinks(subdir, id) + version_config.version_links,
+  'gee:categories': ['plant-productivity', 'water-vapor'],
   keywords: [
-    'cas',
     'evapotranspiration',
-    // TODO(schwehr): Redundant tags. Pick one of gpp or gross_primary_product
     'gpp',
-    'gross_primary_product',
-    'igsnrr',
-    'pml',
   ],
   providers: [
     ee.producer_provider('PML_V2', 'https://github.com/kongdd/PML'),
-    ee.host_provider(self_ee_catalog_url),
+    ee.host_provider(version_config.ee_catalog_url),
   ],
   extent: ee.extent(-180.0, -60.0, 180.0, 90.0, '2002-07-04T00:00:00Z', null),
   summaries: {
@@ -81,7 +63,7 @@ local successor_url = catalog_subdir_url + successor_filename;
     'eo:bands': [
       {
         name: 'GPP',
-        description: 'Gross primary product',
+        description: 'Gross primary production',
         'gee:units': 'gC m-2 d-1',
       },
       {
@@ -102,8 +84,9 @@ local successor_url = catalog_subdir_url + successor_filename;
       {
         name: 'ET_water',
         description: |||
-          Water body, snow and ice evaporation. Penman evapotranspiration is
-          regarded as actual evaporation for them.
+          Evaporation from water bodies, snow, and ice. Calculated using the
+          Penman equation, which is considered a good estimate of actual
+          evaporation for these surfaces.
         |||,
         'gee:units': units.millimeter_per_day,
       },

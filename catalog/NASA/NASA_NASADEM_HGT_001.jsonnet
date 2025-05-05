@@ -21,11 +21,11 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ee_const.ext_ver,
   ],
   id: id,
-  title: 'NASADEM: NASA NASADEM Digital Elevation 30m',
+  title: 'NASADEM: NASA 30m Digital Elevation Model',
   version: '1',
   'gee:type': ee_const.gee_type.image,
   description: |||
-    NASADEM is a reprocessing of STRM data, with improved accuracy by incorporating auxiliary data
+    NASADEM is a reprocessing of SRTM data, with improved accuracy by incorporating auxiliary data
     from ASTER GDEM, ICESat GLAS, and PRISM datasets.
 
     The most significant processing improvements involve void reduction through improved
@@ -38,6 +38,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   license: license.id,
   links: ee.standardLinks(subdir, id) + [
   ],
+  'gee:categories': ['elevation-topography'],
   keywords: [
     'dem',
     'elevation',
@@ -49,8 +50,11 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'usgs',
   ],
   providers: [
-    ee.producer_provider('NASA / USGS / JPL-Caltech', 'https://cmr.earthdata.nasa.gov/search/concepts/C1546314043-LPDAAC_ECS.html'),
+    ee.producer_provider('NASA / USGS / JPL-Caltech', 'https://lpdaac.usgs.gov/products/nasadem_hgtv001/'),
     ee.host_provider(self_ee_catalog_url),
+  ],
+  'gee:provider_ids': [
+    'C2763264762-LPCLOUD',
   ],
   extent: ee.extent(-180.0, -56.0, 180.0, 60.0,
                     '2000-02-11T00:00:00Z', '2000-02-22T00:00:00Z'),

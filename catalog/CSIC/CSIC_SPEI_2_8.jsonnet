@@ -1,17 +1,17 @@
-local id = 'CSIC/SPEI/2_8';
-local version = '2.8';
-local subdir = 'CSIC';
+local versions = import 'versions.libsonnet';
+local version_table = import 'CSIC_SPEI_versions.libsonnet';
 
 local ee_const = import 'earthengine_const.libsonnet';
 local ee = import 'earthengine.libsonnet';
 local spdx = import 'spdx.libsonnet';
 local units = import 'units.libsonnet';
 
-local license = spdx.cc_by_4_0;
+local id = 'CSIC/SPEI/2_8';
+local subdir = 'CSIC';
+local version_config = versions(subdir, version_table, id);
+local version = version_config.version;
 
-local basename = std.strReplace(id, '/', '_');
-local base_filename = basename + '.json';
-local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
+local license = spdx.cc_by_4_0;
 
 {
   stac_version: ee_const.stac_version,
@@ -23,15 +23,16 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   ],
   id: id,
   title: 'SPEIbase: Standardised Precipitation-Evapotranspiration Index ' +
-    'database, Version ' + version,
+    'database, Version ' + version + ' [deprecated]',
   version: version,
+  'gee:status': 'deprecated',
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
     The Global SPEI database (SPEIbase) offers long-time robust information
     about drought conditions at the global scale, with a 0.5 degree pixel size
     and monthly cadence. It provides SPEI time scales from 1 to 48 months.
 
-    The Standardized Precipitatin-Evapotranspiration Index (SPEI) expresses,
+    The Standardized Precipitation-Evapotranspiration Index (SPEI) expresses,
     as a standardized variate (mean zero and unit variance), the deviations of
     the current climatic balance (precipitation minus evapotranspiration
     potential) with respect to the long-term balance. The reference period for
@@ -44,7 +45,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     estimation of potential evapotranspiration.
     This is a major difference with respect to the SPEI Global Drought Monitor,
     that uses the Thornthwaite PET estimation.
-    The Penman-Montheith method is considered a superior method, so the
+    The Penman-Monteith method is considered a superior method, so the
     SPEIbase is recommended for most uses including long-term climatological
     analysis.
   |||,
@@ -54,7 +55,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       rel: ee_const.rel.cite_as,
       href: 'https://doi.org/10.20350/digitalCSIC/15121',
     },
-  ],
+  ] + version_config.version_links,
+  'gee:categories': ['water-vapor'],
   keywords: [
     'climate',
     'climate_change',
@@ -69,7 +71,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   providers: [
     ee.producer_provider('Spanish National Research Council (CSIC)',
       'https://spei.csic.es/'),
-    ee.host_provider(self_ee_catalog_url),
+    ee.host_provider(version_config.ee_catalog_url),
   ],
   extent: ee.extent_global('1901-01-01T00:00:00Z', '2021-01-01T00:00:00Z'),
   summaries: {

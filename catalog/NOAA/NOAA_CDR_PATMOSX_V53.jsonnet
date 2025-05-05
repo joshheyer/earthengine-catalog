@@ -47,6 +47,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://doi.org/10.7289/V5348HCK',
     },
   ],
+  'gee:categories': ['climate'],
   keywords: [
     'atmospheric',
     'avhrr',
@@ -61,7 +62,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'temperature',
   ],
   providers: [
-    ee.producer_provider('NOAA', 'https://www.ncdc.noaa.gov/cdr/atmospheric/avhrr-cloud-properties-patmos-x'),
+    ee.producer_provider('NOAA', 'https://www.ncei.noaa.gov/products/climate-data-records/avhrr-hirs-cloud-properties-patmos'),
     ee.host_provider(self_ee_catalog_url),
   ],
   extent: ee.extent_global('1979-01-01T00:00:00Z', null),

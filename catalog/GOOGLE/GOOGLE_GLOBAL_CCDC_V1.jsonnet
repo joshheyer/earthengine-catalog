@@ -12,7 +12,6 @@ local base_filename = basename + '.json';
 local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
 
 {
-  'gee:skip_indexing': true,
   // TODO(gorelick): remove gee:user_uploaded if the tiles are in a public
   // location. For now the asset doesn't exist.
   'gee:user_uploaded': true,
@@ -74,7 +73,9 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['landuse-landcover'],
   keywords: [
+    'change_detection',
     'google',
     'landcover',
     'landsat_derived',

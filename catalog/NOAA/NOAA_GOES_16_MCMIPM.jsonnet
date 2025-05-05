@@ -34,6 +34,10 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
 
     The locations of domains 1 and 2 change over time.
 
+    Formerly known as "GOES East"; replaced by
+    [GOES-19](https://developers.google.com/earth-engine/datasets/catalog/NOAA_GOES_19_MCMIPM)
+    as of April 7, 2025.
+
     [README](https://www.ncei.noaa.gov/products/satellite/goes-r-series)
   ||| + importstr 'general_satellite_messages_description.md',
   license: license.id,
@@ -43,9 +47,9 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://console.cloud.google.com/storage/browser/gcp-public-data-goes-16/ABI-L2-MCMIPM/',
     },
   ],
+  'gee:categories': ['atmosphere', 'satellite-imagery'],
   keywords: [
     'abi',
-    'climate',
     'goes',
     'goes_16',
     'goes_east',
@@ -57,12 +61,20 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'weather',
   ],
   providers: [
-    ee.producer_provider('NOAA', 'https://data.noaa.gov/dataset/dataset/noaa-goes-r-series-advanced-baseline-imager-abi-level-2-fire-hot-spot-characterization-fdc'),
+    ee.producer_provider('NOAA', 'https://data.noaa.gov/onestop/collections/details/385d4d38-267e-40c1-859d-b5d8a079c5df'),
     ee.host_provider(self_ee_catalog_url),
   ],
   extent: ee.extent_global('2017-07-10T00:00:00Z', null),
   summaries: {
     'gee:schema': [
+      {
+        name: 'domain',
+        description: 'Domain of the image (1 or 2). Each domain is a 1000km x
+        1000km square which changes over time. Domain 1 defaults to the East
+        Coast of the United States; domain 2 defaults to the the Midwest region
+        of the United States.',
+        type: ee_const.var_type.int,
+      },
       {
         name: 'CMI_C01_offset',
         description: 'Offset to add to scaled CMI_C01 values',

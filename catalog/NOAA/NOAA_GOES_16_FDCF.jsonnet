@@ -35,7 +35,11 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     "saturated" categories (mask codes 10, 11, 30, and 31), but within these categories there
     can still be false alarms.
 
-    [README](https://www.ncdc.noaa.gov/data-access/satellite-data/goes-r-series-satellites#FDC)
+    Formerly known as "GOES East"; replaced by
+    [GOES-19](https://developers.google.com/earth-engine/datasets/catalog/NOAA_GOES_19_FDCF)
+    as of April 7, 2025.
+
+    [README](https://www.goes-r.gov/downloads/resources/documents/Beginners_Guide_to_GOES-R_Series_Data.pdf)
 
     NOAA provides the following scripts for suggested categories,
     color maps, and visualizations:
@@ -50,9 +54,9 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://console.cloud.google.com/storage/browser/gcp-public-data-goes-16/ABI-L2-FDCF/',
     },
   ],
+  'gee:categories': ['fire'],
   keywords: [
     'abi',
-    'climate',
     'fdc',
     'fire',
     'goes',
@@ -66,7 +70,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'wildfire',
   ],
   providers: [
-    ee.producer_provider('NOAA', 'https://data.noaa.gov/dataset/dataset/noaa-goes-r-series-advanced-baseline-imager-abi-level-2-fire-hot-spot-characterization-fdc'),
+    ee.producer_provider('NOAA', 'https://data.noaa.gov/onestop/collections/details/d9303237-8672-4917-a251-29c3f7640684'),
     ee.host_provider(self_ee_catalog_url),
   ],
   extent: ee.extent_global('2017-05-24T00:00:00Z', null),

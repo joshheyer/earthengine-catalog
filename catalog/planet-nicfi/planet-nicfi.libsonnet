@@ -49,6 +49,7 @@ local license = spdx.proprietary;
       commodities and financial markets.
   |||,
   license: license.id,
+  'gee:categories': ['satellite-imagery'],
   keywords: [
     'basemaps',
     'forest',
@@ -125,5 +126,4 @@ local license = spdx.proprietary;
     used)
   |||,
   'gee:unusual_terms_of_use': true,
-  'gee:user_uploaded': true,
 }

@@ -18,7 +18,6 @@ local parent_url = catalog_subdir_url + 'catalog.json';
 local self_url = catalog_subdir_url + base_filename;
 
 {
-  'gee:user_uploaded': true,
   stac_version: ee_const.stac_version,
   type: ee_const.stac_type.collection,
   stac_extensions: [
@@ -63,6 +62,7 @@ local self_url = catalog_subdir_url + base_filename;
       href: 'https://dapds00.nci.org.au/thredds/catalog/fk4/datacube/002/NIDEM/geotiff/catalog.html',
     },
   ],
+  'gee:categories': ['elevation-topography'],
   keywords: [
     'australia',
     'ga',

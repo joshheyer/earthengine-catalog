@@ -17,6 +17,11 @@
 {
   // https://en.wikipedia.org/wiki/Acceleration
   acceleration_si: 'm/s^2',
+  // https://en.wikipedia.org/wiki/Air_pollutant_concentrations
+  mg_per_sq_m: '&mu;g/m&sup3',
+
+  // https://en.wikipedia.org/wiki/Area
+  area: 'm^2',
 
   // https://en.wikipedia.org/wiki/Area_density
   area_density: 'kg/m^2',
@@ -26,15 +31,30 @@
   // Example: m^2 / m^2
   area_fraction: 'Area fraction',
 
+  // Atmosphere-centimeters. Measures the total amount of gas in a column from
+  // the surface to the top of the atmosphere by asking, "how many centimeters
+  // thick would the gas in this column be if compressed into a single layer
+  // at 1 atm and 0 deg C?"
+  atmosphere_centimeters: 'atm cm',
+
+  // https://en.wikipedia.org/wiki/Astronomical_unit
+  astronomical_unit: 'AU',
+
   // https://en.wikipedia.org/wiki/Bar_(unit)
   millibar: 'mbar',
 
   // https://en.wikipedia.org/wiki/Celsius
   celsius: '&deg;C',
+  fahrenheit: '&deg;F',
 
   // A number of items.
   count: 'count',
   count_per_day: 'count/d',
+  count_per_acre: 'count/acre',
+
+  // https://en.wikipedia.org/wiki/Cubic_foot
+  // https://en.wikipedia.org/wiki/Acre
+  cubic_ft_per_acre: 'ft^3/acre',
 
   // http://www.iau.org/science/publications/proceedings_rules/units/
   day: 'd',
@@ -56,6 +76,9 @@
   density_si: 'kg/m^3',
   density_mg_per_m_cubed: 'mg/m^3',
 
+  // https://www.efunda.com/glossary/units/units--surface_density--gram_per_square_centimeter.cfm
+  surface_density: 'g/cm^2',
+
   // Digital Number (DN) is an uncalibrated pixel value.
   // https://www.oxfordreference.com/display/10.1093/oi/authority.20110803095718218
   // https://en.wikipedia.org/wiki/DN
@@ -76,6 +99,9 @@
   // Time spent in an area.
   hour_per_square_km: 'h/km^2',
 
+  // https://en.wikipedia.org/wiki/Inch
+  inch: 'in',
+
   // https://en.wikipedia.org/wiki/Joule
   // https://en.wikipedia.org/wiki/Flux
   // https://en.wikipedia.org/wiki/Radiant_exposure
@@ -85,9 +111,24 @@
   // https://en.wikipedia.org/wiki/Kelvin
   kelvin: 'K',
 
+  // https://en.wikipedia.org/wiki/Mass_flux
+  kg_per_hour: 'kg/h',
+
+  // https://en.wikipedia.org/wiki/Flux#Flux_as_flow_rate_per_unit_area
+  kg_per_hour_per_square_km: 'kg/h/km^2',
+
+  // https://en.wikipedia.org/wiki/Foot_(unit)
+  foot: 'ft',
+
+  // https://en.wikipedia.org/wiki/Geopotential_height
+  geopotential_meter: 'gpm',
+
   // https://en.wikipedia.org/wiki/Kilogram
   // Unused: kilogram: 'kg',
   gigagrams: 'Gg',
+
+  // https://en.wikipedia.org/wiki/Inverse_second
+  inverse_second: '1/s',
 
   // https://en.wikipedia.org/wiki/Convective_available_potential_energy (CAPE)
   // https://en.wikipedia.org/wiki/Specific_energy
@@ -103,6 +144,7 @@
   // a.k.a. molar fraction
   // See also: https://en.wikipedia.org/wiki/Mixing_ratio
   mole_fraction: 'Mol fraction',
+  molecules_per_cm2: 'molecules/cm^2',
 
   // https://en.wikipedia.org/wiki/Metre
   meter: 'm',
@@ -113,10 +155,12 @@
 
   // Typically used for evaporation.
   millimeter_per_day: 'mm/d',
+  millimeter_per_year: 'mm/y',
 
   // http://www.iau.org/science/publications/proceedings_rules/units/
   minute: 'min',
-
+  mumeter: '&mu;m',
+  nanometers: 'nm',
   // https://usma.org/detailed-list-of-metric-system-units-and-symbols
   nautical_mile: 'nmi',
 
@@ -124,6 +168,9 @@
   pascal: 'Pa',
   hectopascal: 'hPa',
   kilopascal: 'kPa',
+
+  // https://en.wikipedia.org/wiki/Viscosity#Dynamic_viscosity
+  pascal_seconds: 'Pa s',
 
   // https://en.wikipedia.org/wiki/Percentage
   // https://en.wikipedia.org/wiki/Percent_sign
@@ -146,6 +193,16 @@
   // https://en.wikipedia.org/wiki/Steradian
   // radiance: 'Watts/sr/m^2',
   radiance_nanowatts_cm2: 'nanoWatts/sr/cm^2',
+  radiance_nanowatts_cm2_nanometers: 'nanoWatts/sr/cm^2/nm',
+
+  // https://en.wikipedia.org/wiki/Reflectance
+  spectral_reflectance: 'Spectral reflectance',
+
+  // https://en.wikipedia.org/wiki/Standard_deviation
+  standard_deviation: 'Standard deviation',
+
+  // https://en.wikipedia.org/wiki/Viscosity#Kinematic_viscosity
+  squared_meter_per_second: 'm^2/s',
 
   // https://en.wikipedia.org/wiki/Precipitation#Measurement
   rainfall_rate_kg_per_m2_per_s: 'kg/m^2/s',
@@ -155,6 +212,30 @@
   p_value: 'P-value',
   // % change/year × 100
   percent_change_per_year: '% change/y',
+  // https://en.wikipedia.org/wiki/Parts-per_notation
+  ppb: 'ppb',
+  ppm: 'ppm',
+
+  // https://www.bridgerphotonics.com/blog/understanding-ppm-and-ppm-m-gas-concentration-units
+  ppmm: 'ppm m',
+
+  // https://en.wikipedia.org/wiki/Board_foot
+  // https://catalesawmill.com/log-board-foot-calculator/
+  // https://dqydj.com/log-rule-board-feet-calculator/
+  sawlog_board_ft_per_acre: 'sawlog-board-ft/acre',
+
+  seconds:'seconds',
+
+  // https://en.wikipedia.org/wiki/Square_foot
+  square_ft: 'ft^2',
+
+  // https://en.wikipedia.org/wiki/Square_foot
+  // https://en.wikipedia.org/wiki/Acre
+  square_ft_per_acre: 'ft^2/acre',
+
+  // https://en.wikipedia.org/wiki/Short_ton
+  // https://en.wikipedia.org/wiki/Acre
+  tons_per_acre: 'tons/acre',
 
   // https://en.wikipedia.org/wiki/Fraction
   unspecified_fraction: 'Fraction',
@@ -162,8 +243,12 @@
   // https://en.wikipedia.org/wiki/Velocity
   velocity_si: 'm/s',
 
+  // https://en.wikipedia.org/wiki/Volume
+  volume: 'm^3',
+
   // https://en.wikipedia.org/wiki/Volume_fraction
   volume_fraction: 'Volume fraction',
+  volumetric_content: 'cm^3/cm^3',
 
   // https://en.wikipedia.org/wiki/Watt
   // Unused: watt: 'w',

@@ -23,7 +23,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   ],
   id: id,
   title: 'GLCF: Landsat Tree Cover Continuous Fields [deprecated]',
-  deprecated: true,
+  'gee:status': 'deprecated',
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
     The Landsat Vegetation Continuous Fields (VCF) tree cover layers contain
@@ -56,6 +56,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ee.link.successor(
         successor_id, ee_const.catalog_base + 'NASA/NASA_MEASURES_GFCC_TC_v3.json'),
   ],
+  'gee:categories': ['forest-biomass'],
   keywords: [
     'forest',
     'glcf',

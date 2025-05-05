@@ -57,6 +57,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://doi.org/10.5285/58f00d8814064b79a0c49662ad3af537',
     },
   ],
+  'gee:categories': ['fire'],
   keywords: [
     'burn',
     'c3s',
@@ -113,9 +114,14 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
         |||,
         'gee:classes': [
           {
+            color: '000000',
+            description: 'No Data',
+            value: 0,
+          },
+          {
             color: 'ffff64',
             description: 'Cropland, rainfed',
-            value: 0,
+            value: 10,
           },
           {
             value: 20,
@@ -195,7 +201,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
           {
             value: 180,
             color: '00dc82',
-            description: 'Shrub or herbaceous cover, flooded, fresh/saline/brakish water',
+            description: 'Shrub or herbaceous cover, flooded, fresh/saline/brackish water',
           },
         ],
       },

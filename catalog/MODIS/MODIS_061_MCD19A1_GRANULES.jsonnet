@@ -30,17 +30,15 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     Reflectance Factor (BRF) gridded Level 2 product produced daily at 500 meter
     and 1 kilometer resolution. For more information see the
     [MAIAC user guide](https://lpdaac.usgs.gov/documents/1500/MCD19_User_Guide_V61.pdf).
-
-    NOTE: Full ingestion into Earth Engine is expected to continue through
-    winter 2023.
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id) + [
     {
       rel: ee_const.rel.cite_as,
-      href: 'https://lpdaac.usgs.gov/products/mcd19a1v061/',
+      href: 'https://doi.org/10.5067/MODIS/MCD19A1.061',
     },
   ],
+  'gee:categories': ['satellite-imagery'],
   keywords: [
     'aerosol',
     'aod',
@@ -54,7 +52,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'usgs',
   ],
   providers: [
-    ee.producer_provider('NASA LP DAAC at the USGS EROS Center', 'https://lpdaac.usgs.gov/products/mcd19a1v061/'),
+    ee.producer_provider('NASA LP DAAC at the USGS EROS Center', 'https://doi.org/10.5067/MODIS/MCD19A1.061'),
     ee.host_provider(self_ee_catalog_url),
   ],
   'gee:provider_ids': [
@@ -67,6 +65,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       'Terra',
     ],
   },
+  'sci:doi': '10.5067/MODIS/MCD19A1.061',
   'sci:citation': |||
     Please visit [LP DAAC 'Citing Our Data' page](https://lpdaac.usgs.gov/citing_our_data)
     for information on citing LP DAAC datasets.

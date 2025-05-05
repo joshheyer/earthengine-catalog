@@ -44,7 +44,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
 
     * [General Documentation](https://lpdaac.usgs.gov/products/vnp64a1v001/)
 
-    * [Land Product Quality Assessment website](https://landweb.modaps.eosdis.nasa.gov/NPP_QA/)
+    * [Land Product Quality Assessment website](https://landweb.modaps.eosdis.nasa.gov/browse?sensor=VIIRS&sat=SNPP)
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id) + [
@@ -53,8 +53,10 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://doi.org/10.5067/VIIRS/VNP64A1.001',
     },
   ],
+  'gee:categories': ['fire'],
   keywords: [
     'burn',
+    'change_detection',
     'land',
     'nasa',
     'noaa',

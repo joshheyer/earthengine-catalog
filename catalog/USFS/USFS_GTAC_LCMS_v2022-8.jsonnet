@@ -2,12 +2,13 @@ local ee_const = import 'earthengine_const.libsonnet';
 local ee = import 'earthengine.libsonnet';
 local spdx = import 'spdx.libsonnet';
 local versions = import 'versions.libsonnet';
-local version_table = import 'USFS_GTAC_LCMS.libsonnet';
+local version_table = import 'USFS_GTAC_LCMS_versions.libsonnet';
 
 local subdir = 'USFS';
-local version = 'v2022.8';
-local version_config = versions(subdir, version_table, version);
-local basename = std.strReplace(version_config.id, '/', '_');
+local id = 'USFS/GTAC/LCMS/v2022-8';
+local version_config = versions(subdir, version_table, id);
+local version = version_config.version;
+local basename = std.strReplace(id, '/', '_');
 local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
 
 local license = spdx.proprietary;
@@ -20,9 +21,10 @@ local license = spdx.proprietary;
     ee_const.ext_sci,
     ee_const.ext_ver,
   ],
-  id: version_config.id,
+  id: id,
+  'gee:status': 'deprecated',
   title: 'USFS Landscape Change Monitoring System ' + version + ' ' +
-    '(CONUS and OCONUS)',
+    '(CONUS and OCONUS) [deprecated]',
   version: version,
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
@@ -171,9 +173,10 @@ local license = spdx.proprietary;
     [doi:10.1016/j.rse.2014.01.011](https://doi.org/10.1016/j.rse.2014.01.011)
   |||,
   license: license.id,
-  links: ee.standardLinks(subdir, version_config.id) + [
+  links: ee.standardLinks(subdir, id) + [
     ee.link.license('https://data.fs.usda.gov/geodata/rastergateway/LCMS/index.php')
   ] + version_config.version_links,
+  'gee:categories': ['landuse-landcover'],
   keywords: [
     'change',
     'change_detection',

@@ -1,18 +1,15 @@
 local id = 'COPERNICUS/CORINE/V18_5_1/100m';
-local successor_id = 'COPERNICUS/CORINE/V20/100m';
+local versions = import 'versions.libsonnet';
+local version_table = import 'templates/corine_100m_versions.libsonnet';
+
 local subdir = 'COPERNICUS';
 
 local ee_const = import 'earthengine_const.libsonnet';
 local ee = import 'earthengine.libsonnet';
 local spdx = import 'spdx.libsonnet';
-
+local version_config = versions(subdir, version_table, id);
+local version = version_config.version;
 local license = spdx.proprietary;
-
-local basename = std.strReplace(id, '/', '_');
-local successor_basename = std.strReplace(successor_id, '/', '_');
-local base_filename = basename + '.json';
-local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
-local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
 
 {
   stac_version: ee_const.stac_version,
@@ -23,8 +20,8 @@ local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
   ],
   id: id,
   title: 'Copernicus CORINE Land Cover [deprecated]',
-  version: 'V18.5.1',
-  deprecated: true,
+  version: version,
+  'gee:status': 'deprecated',
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
     The CORINE (coordination of information on the environment) Land Cover
@@ -34,7 +31,7 @@ local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
     Copernicus programme and implemented by national teams. The number of
     participating countries has increased over time currently including 33 (EEA)
     member countries and six cooperating countries (EEA39) with a total area of
-    over 5.8 Mkm2.
+    over 5.8M km2.
 
     The reference year of the first CLC inventory was 1990 and the first update
     created in 2000. Later, the update cycle has become 6 years. Satellite
@@ -47,8 +44,6 @@ local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id) + [
-    ee.link.successor(
-        successor_id, catalog_subdir_url + successor_basename + '.json'),
     {
       rel: ee_const.rel.source,
       href: 'https://land.copernicus.eu/pan-european/corine-land-cover/clc-1990?tab=download',
@@ -65,7 +60,8 @@ local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
       rel: ee_const.rel.source,
       href: 'https://land.copernicus.eu/pan-european/corine-land-cover/clc-2012?tab=download',
     },
-  ],
+  ] + version_config.version_links,
+  'gee:categories': ['landuse-landcover'],
   keywords: [
     'clc',
     'copernicus',
@@ -77,7 +73,7 @@ local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
   ],
   providers: [
     ee.producer_provider('EEA/Copernicus', 'https://land.copernicus.eu/pan-european/corine-land-cover/view'),
-    ee.host_provider(self_ee_catalog_url),
+    ee.host_provider(version_config.ee_catalog_url),
   ],
   extent: ee.extent(-81.77, -29.2, 94.13, 73.81,
                     '1986-01-01T00:00:00Z', '2012-12-31T00:00:00Z'),

@@ -38,6 +38,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['landuse-landcover'],
   keywords: [
     'chip',
     'copernicus',
@@ -209,6 +210,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   'gee:terms_of_use': |||
     The BigEarthNet Archive is licensed under the Community Data License
     Agreement - Permissive, Version 1.0.  For more information,
-    please refer to the (http://bigearth.net/downloads/documents/License.pdf).
+    please refer to
+    [https://cdla.dev/permissive-1-0](https://cdla.dev/permissive-1-0/).
   |||,
 }

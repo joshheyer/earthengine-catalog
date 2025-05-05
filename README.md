@@ -21,7 +21,9 @@ This repository contains Earth Engine catalog content.
 ## Quick links
 
 - [Edit existing entries](docs/simple_edits.md).
-- [See annotated example catalog entries](catalog/TEMPLATE).
+- [Add new publisher catalogs](docs/adding_catalogs.md).
+- [Add new datasets](docs/adding_datasets.md).
+- [See annotated examples](catalog/TEMPLATE).
 - [Request to add a new dataset](https://issuetracker.google.com/issues?q=status:(open%20%7C%20new%20%7C%20assigned%20%7C%20accepted)%20componentid:1161680&p=1). If you'd like to maintain this dataset, make a note in the request.
 - [Report a problem with an existing dataset](https://issuetracker.google.com/issues?q=status:(open%20%7C%20new%20%7C%20assigned%20%7C%20accepted)%20componentid:1161653).
 
@@ -34,7 +36,9 @@ describing spatial datasets in a catalog.
 Earth Engine uses STAC [Jsonnet](https://jsonnet.org) templates to generate the
 [Earth Engine Public Data Catalog](https://developers.google.com/earth-engine/datasets/catalog)
 and the
-[STAC JSON catalog](https://console.cloud.google.com/storage/browser/earthengine-stac).
+[STAC JSON catalog](https://console.cloud.google.com/storage/browser/earthengine-stac/catalog)
+with
+[the root catalog.json file here](https://storage.googleapis.com/earthengine-stac/catalog/catalog.json).
 Using Jsonnet
 allows repetitive content to be written one time and used across multiple
 collections and items.
@@ -46,9 +50,11 @@ You can use these external services to browse the EE STAC catalog:
 - [gee.stac.cloud](https://gee.stac.cloud/)
 
 
-# Install / Build instructions
+# Local Install Instructions
 
-See [install](docs/install.md)
+If you'd like to run validity checks locally (not via GitHub actions), see
+[the local installation instructions](docs/install.md). Most people won't
+need this.
 
 # Non-commercial datasets
 

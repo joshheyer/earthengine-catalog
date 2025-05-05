@@ -22,7 +22,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ee_const.ext_ver,
   ],
   id: id,
-  title: 'MOD09CMG.061 Surface Reflectance Daily L3 Global 0.05 Deg CMG',
+  title: 'MOD09CMG.061 Terra Surface Reflectance Daily L3 Global 0.05 Deg CMG',
   version: '6.1',
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
@@ -51,6 +51,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://doi.org/10.5067/MODIS/MOD09CMG.061',
     },
   ],
+  'gee:categories': ['satellite-imagery'],
   keywords: [
     'brightness_temperature',
     'ozone',
@@ -62,7 +63,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ee.host_provider(self_ee_catalog_url),
   ],
   'gee:provider_ids': [
-    'C1621091621-LPDAAC_ECS',
+    'C2565788876-LPCLOUD',
   ],
   extent: ee.extent_global('2000-02-24T00:00:00Z', null),
   summaries: template.summaries {

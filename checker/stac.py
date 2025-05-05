@@ -13,6 +13,7 @@ from typing import Iterator, Optional
 import os
 
 GEE_TYPE = 'gee:type'
+GEE_STATUS = 'gee:status'
 TYPE = 'type'
 # This is an intentionally invalid dataset_id.
 UNKNOWN_ID = '> UNKNOWN ID: '
@@ -46,6 +47,20 @@ class GeeType(*_StrEnum):
   TABLE_COLLECTION = 'table_collection'
   # For catalogs
   NONE = 'none'
+
+  @classmethod
+  def allowed_collection_types(cls):
+    return frozenset(x.value for x in cls if x != cls.NONE)
+
+
+class Status(*_StrEnum):
+  BETA = 'beta'
+  DEPRECATED = 'deprecated'
+  INCOMPLETE = 'incomplete'
+
+  @classmethod
+  def allowed_statuses(cls):
+    return frozenset(x.value for x in cls)
 
 
 def data_root() -> pathlib.Path:
@@ -181,4 +196,7 @@ def is_in_non_commercial(dataset_id: str) -> bool:
   if not NON_COMMERCIAL_LIST:
     non_commerical_file = data_root() / 'non_commercial_datasets.json'
     NON_COMMERCIAL_LIST = json.loads(non_commerical_file.read_text())
-  return dataset_id in NON_COMMERCIAL_LIST
+  for pattern in NON_COMMERCIAL_LIST:
+    if dataset_id.startswith(pattern):
+      return True
+  return False

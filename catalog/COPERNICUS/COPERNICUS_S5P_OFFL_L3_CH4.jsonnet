@@ -32,14 +32,14 @@ local COPERNICUS_S5P = import 'COPERNICUS_S5P.libsonnet';
 
     Methane (CH<sub>4</sub>) is, after carbon dioxide (CO<sub>2</sub>), the most
     important contributor to the anthropogenically enhanced greenhouse effect.
-    Roughly three-quarters of methane emissions are anthropogenic and as such it
+    Roughly three-quarters of methane emissions are anthropogenic and as such, it
     is important to continue the record of satellite based measurements. TROPOMI
     aims at providing CH<sub>4</sub> column concentrations with high sensitivity
     to the Earth's surface, good spatiotemporal coverage, and sufficient
     accuracy to facilitate inverse modeling of sources and sinks. TROPOMI uses
     absorption information from the Oxygen-A Band (760nm) and the SWIR spectral
     range to monitor CH<sub>4</sub> abundances in the Earth's atmosphere.
-    [[More information](http://www.tropomi.eu/data-products/methane)]
+    [More information.](http://www.tropomi.eu/data-products/methane)
 
     Currently, the following data quality issues are known, are not covered by
     the quality flags, and should be kept in mind when looking at the methane
@@ -98,6 +98,7 @@ local COPERNICUS_S5P = import 'COPERNICUS_S5P.libsonnet';
   ||| + s5p_desc,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['atmosphere'],
   keywords: [
     'climate',
     'copernicus',

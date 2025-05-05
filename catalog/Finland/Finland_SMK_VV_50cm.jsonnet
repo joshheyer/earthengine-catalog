@@ -32,16 +32,17 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     In these images, the bands are near-infrared, red, and green.
 
     (In Dataset id, VV stands for "v&auml;&auml;r&auml;v&auml;ri", false color)
-    For more information, please see the [NLS orthophotos documentation]
-    (https://www.maanmittauslaitos.fi/en/maps-and-spatial-data/expert-users/product-descriptions/orthophotos)
+
+    For more information, please see the
+    [NLS orthophotos documentation](https://www.maanmittauslaitos.fi/en/maps-and-spatial-data/expert-users/product-descriptions/orthophotos)
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['orthophotos'],
   keywords: [
     'falsecolor',
     'finland',
     'nrg',
-    'orthophoto',
     'smk',
   ],
   providers: [
@@ -51,7 +52,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ),
     ee.host_provider(self_ee_catalog_url),
   ],
-  extent: ee.extent(59.0, 18.0, 69.4, 29.2,
+  extent: ee.extent(18.0, 59.0, 29.2, 69.4,
                     '2015-01-01T00:00:00Z', '2022-01-01T00:00:00Z'),
   summaries: {
     gsd: [
@@ -75,8 +76,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       {
         display_name: 'NRG',
         lookat: {
-          lat: 25.7416,
-          lon: 62.2446,
+          lat: 62.2446,
+          lon: 25.7416,
           zoom: 16,
         },
         image_visualization: {

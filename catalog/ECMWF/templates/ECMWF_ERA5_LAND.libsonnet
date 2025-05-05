@@ -1,8 +1,11 @@
 local units = import 'units.libsonnet';
 
-local meters = 'm';
+// Meters of water equivalent, a measurement used in ECMWF datasets for things
+// like amount of snowfall (assuming an evenly-distributed melt) or evaporation
+// (assuming an evenly-distributed condensation). It is different from the
+// meter water equivalent used to measure cosmic ray shielding for underground
+// laboratories (https://en.wikipedia.org/wiki/Meter_water_equivalent).
 local meters_eq = 'm of water equivalent';
-local flux = 'J/m^2';
 
 {
   description: |||
@@ -15,6 +18,15 @@ local flux = 'J/m^2';
     goes several decades back in time, providing an accurate description of the
     climate of the past. This dataset includes all 50 variables as available on
     CDS.
+
+    ERA5-Land data is available from 1950 to three months from real-time.
+
+    Please consult [the ERA5-Land "Known Issues" section](https://confluence.ecmwf.int/display/CKB/ERA5-Land%3A+data+documentation). In particular, note that three components of the total evapotranspiration have values swapped as follows:
+
+    * variable "Evaporation from bare soil" (mars parameter code 228101 (evabs)) has the values corresponding to the "Evaporation from vegetation transpiration" (mars parameter 228103 (evavt)),
+    * variable "Evaporation from open water surfaces excluding oceans (mars parameter code 228102 (evaow)) has the values corresponding to the "Evaporation from bare soil" (mars parameter code 228101 (evabs)),
+    * variable "Evaporation from vegetation transpiration" (mars parameter code 228103 (evavt)) has the values corresponding to the "Evaporation from open water surfaces excluding oceans" (mars parameter code 228102 (evaow)).
+
   |||,
   min_max: [{key:'min', value:'minimum'}, {key:'max', value:'maximum'}],
   keywords: [
@@ -62,23 +74,23 @@ local flux = 'J/m^2';
   flow_bands_unit: [
     meters_eq,
     meters_eq,
-    flux,
-    flux,
-    flux,
-    flux,
-    flux,
-    flux,
+    units.joules_per_meter2,
+    units.joules_per_meter2,
+    units.joules_per_meter2,
+    units.joules_per_meter2,
+    units.joules_per_meter2,
+    units.joules_per_meter2,
     meters_eq,
     meters_eq,
     meters_eq,
     meters_eq,
-    meters,
-    meters,
+    units.meter,
+    units.meter,
     meters_eq,
-    meters,
-    meters,
+    units.meter,
+    units.meter,
     meters_eq,
-    meters,
+    units.meter,
   ],
   bands: [
     {
@@ -173,7 +185,7 @@ local flux = 'J/m^2';
         layer is represented. This parameter is the thickness of that ice
         layer.
       |||,
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'lake_ice_temperature',
@@ -200,7 +212,7 @@ local flux = 'J/m^2';
         water below. Mixing can also occur through the action of wind on the
         surface of the lake.
       |||,
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'lake_mix_layer_temperature',
@@ -257,7 +269,6 @@ local flux = 'J/m^2';
         It represents the fraction (0-1) of the cell / grid-box occupied by
         snow (similar to the cloud cover fields of ERA5).
       |||,
-      units: units.percent,
     },
     {
       name: 'snow_density',
@@ -272,7 +283,7 @@ local flux = 'J/m^2';
     {
       name: 'snow_depth',
       description: 'Instantaneous grib-box average of the snow thickness on\n          the ground (excluding snow on canopy).',
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'snow_depth_water_equivalent',
@@ -398,7 +409,7 @@ local flux = 'J/m^2';
         to the end of the forecast step. By model convention, downward fluxes
         are positive.
       |||,
-      units: flux,
+      units: units.joules_per_meter2,
     },
     {
       name: 'surface_net_solar_radiation',
@@ -418,7 +429,7 @@ local flux = 'J/m^2';
         period expressed in seconds. The ECMWF convention for vertical fluxes
         is positive downwards.
       |||,
-      units: flux,
+      units: units.joules_per_meter2,
     },
     {
       name: 'surface_net_thermal_radiation',
@@ -427,7 +438,7 @@ local flux = 'J/m^2';
         beginning of the forecast time to the end of the forecast step.
         By model convention downward fluxes are positive.
       |||,
-      units: flux,
+      units: units.joules_per_meter2,
     },
     {
       name: 'surface_sensible_heat_flux',
@@ -446,7 +457,7 @@ local flux = 'J/m^2';
         accumulation period expressed in seconds. The ECMWF convention for
         vertical fluxes is positive downwards.
       |||,
-      units: flux,
+      units: units.joules_per_meter2,
     },
     {
       name: 'surface_solar_radiation_downwards',
@@ -470,7 +481,7 @@ local flux = 'J/m^2';
         expressed in seconds. The ECMWF convention for vertical fluxes is
         positive downwards.
       |||,
-      units: flux,
+      units: units.joules_per_meter2,
     },
     {
       name: 'surface_thermal_radiation_downwards',
@@ -487,7 +498,7 @@ local flux = 'J/m^2';
         should be divided by the accumulation period expressed in seconds.
         The ECMWF convention for vertical fluxes is positive downwards.
       |||,
-      units: flux,
+      units: units.joules_per_meter2,
     },
     {
       name: 'evaporation_from_bare_soil',
@@ -497,6 +508,13 @@ local flux = 'J/m^2';
         forecast time to the end of the forecast step.
       |||,
       units: meters_eq,
+      note: |||
+
+        Note: Due to a known issue with ECMWF data, this band has values
+        corresponding to the evaporation_from_vegetation_transpiration band.
+        Users are encouraged to perform their own validation before using this
+        band.
+      |||,
     },
     {
       name: 'evaporation_from_open_water_surfaces_excluding_oceans',
@@ -507,6 +525,12 @@ local flux = 'J/m^2';
         forecast step.
       |||,
       units: meters_eq,
+      note: |||
+
+        Note: Due to a known issue with ECMWF data, this band has values
+        corresponding to the evaporation_from_bare_soil band. Users are
+        encouraged to perform their own validation before using this band.
+      |||,
     },
     {
       name: 'evaporation_from_the_top_of_canopy',
@@ -528,6 +552,13 @@ local flux = 'J/m^2';
         forecast step.
       |||,
       units: meters_eq,
+      note: |||
+
+        Note: Due to a known issue with ECMWF data, this band has values
+        corresponding to the
+        evaporation_from_open_water_surfaces_excluding_oceans band. Users are
+        encouraged to perform their own validation before using this band.
+      |||,
     },
     {
       name: 'potential_evaporation',
@@ -544,7 +575,7 @@ local flux = 'J/m^2';
         forced by dry air. This variable is accumulated from the beginning of
         the forecast time to the end of the forecast step.
       |||,
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'runoff',
@@ -566,7 +597,7 @@ local flux = 'J/m^2';
         runoff is calculated is given in the IFS Physical Processes
         documentation.
       |||,
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'snow_evaporation',
@@ -596,7 +627,7 @@ local flux = 'J/m^2';
         flood. More information about how runoff is calculated is given in the
         IFS Physical Processes documentation.
       |||,
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'surface_runoff',
@@ -618,7 +649,7 @@ local flux = 'J/m^2';
         runoff is calculated is given in the IFS Physical Processes
         documentation.
       |||,
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'total_evaporation',
@@ -701,7 +732,7 @@ local flux = 'J/m^2';
         rather than representing averages over a model grid box and model time
         step.
       |||,
-      units: meters,
+      units: units.meter,
     },
     {
       name: 'leaf_area_index_high_vegetation',
@@ -836,12 +867,12 @@ local flux = 'J/m^2';
     Please acknowledge the use of ERA5-Land as stated in the
     [Copernicus C3S/CAMS License agreement](https://apps.ecmwf.int/datasets/licences/copernicus/):
 
-    - 5.1.2 Where the Licensee communicates or distributes Copernicus Products
+    - 5.1.1 Where the Licensee communicates or distributes Copernicus Products
     to the public, the Licensee shall inform the recipients of the source by
     using the following or any similar notice:
     'Generated using Copernicus Climate Change Service Information [Year]'.
 
-    - 5.1.3 Where the Licensee makes or contributes to a publication or
+    - 5.1.2 Where the Licensee makes or contributes to a publication or
     distribution containing adapted or modified Copernicus Products, the
     Licensee shall provide the following or any similar notice:
     'Contains modified Copernicus Climate Change Service Information [Year]';

@@ -1,4 +1,7 @@
 local id = 'NOAA/VIIRS/001/VNP46A2';
+local successor_id = 'NASA/VIIRS/002/VNP46A2';
+local latest_id = successor_id;
+local version = '1';
 local subdir = 'NOAA';
 
 local ee_const = import 'earthengine_const.libsonnet';
@@ -8,8 +11,11 @@ local spdx = import 'spdx.libsonnet';
 local license = spdx.proprietary;
 
 local basename = std.strReplace(id, '/', '_');
+local successor_basename = std.strReplace(successor_id, '/', '_');
+local latest_basename = std.strReplace(latest_id, '/', '_');
 local base_filename = basename + '.json';
 local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
+local catalog_subdir_url = ee_const.catalog_base + subdir + '/';
 
 {
   stac_version: ee_const.stac_version,
@@ -22,8 +28,9 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   id: id,
   title:
     'VNP46A2: VIIRS Lunar Gap-Filled BRDF Nighttime Lights Daily L3 ' +
-    'Global 500m',
-  version: '1',
+    'Global 500m [deprecated]',
+  'gee:status': 'deprecated',
+  version: version,
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
     The Suomi National Polar-orbiting Partnership (SNPP) Visible Infrared
@@ -43,7 +50,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
 
     Documentation:
 
-    * [User's Guide](https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Black_Marble_UG_v1.1_July_2020.pdf)
+    * [User's Guide](https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/VIIRS_Black_Marble_UG_v1.3_Sep_2022.pdf)
 
     * [Algorithm Theoretical Basis Document (ATBD)](https://ladsweb.modaps.eosdis.nasa.gov/api/v2/content/archives/Document%20Archive/Science%20Data%20Product%20Documentation/Product%20Generation%20Algorithms/VIIRS_Black_Marble_ATBD_v1.1_July_2020.pdf)
 
@@ -55,7 +62,14 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       rel: ee_const.rel.cite_as,
       href: 'https://doi.org/10.5067/VIIRS/VNP46A2.001',
     },
+    ee.link.latest(
+        latest_id,
+        ee_const.catalog_base + 'NASA/' + latest_basename + '.json'),
+    ee.link.successor(
+      successor_id,
+      ee_const.catalog_base + 'NASA/' + successor_basename + '.json'),
   ],
+  'gee:categories': ['population'],
   keywords: [
     'brdf',
     'daily',
@@ -64,9 +78,10 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'nasa',
     'noaa',
     'viirs',
+    'nighttime',
   ],
   providers: [
-    ee.producer_provider('NASA LP DAAC at the USGS EROS Center', 'https://doi.org/10.5067/VIIRS/VNP46A2.001'),
+    ee.producer_provider('NASA LAADS DAAC', 'https://doi.org/10.5067/VIIRS/VNP46A2.001'),
     ee.host_provider(self_ee_catalog_url),
   ],
   'gee:provider_ids': [

@@ -22,7 +22,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ee_const.ext_ver,
   ],
   id: id,
-  title: 'OpenET CONUS Ensemble Monthly Evapotranspiration v' + version,
+  title: 'OpenET Ensemble Monthly Evapotranspiration v' + version,
   version: version,
   'gee:type': ee_const.gee_type.image_collection,
   description: |||
@@ -43,8 +43,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['water-vapor'],
   keywords: [
-    'conus',
     'evapotranspiration',
     'gridmet_derived',
     'landsat_derived',
@@ -56,8 +56,35 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ee.producer_provider('OpenET, Inc.', 'https://openetdata.org/'),
     ee.host_provider(self_ee_catalog_url),
   ],
-  extent: ee.extent(-126.0, 25.0, -66.0, 50.0, '2016-01-01T00:00:00Z', null),
+  extent: ee.extent(-126.0, 25.0, -66.0, 50.0, '1999-10-01T00:00:00Z', null),
   summaries: {
+    'gee:schema': [
+      {
+        name: 'build_date',
+        description: 'Date assets were built',
+        type: ee_const.var_type.string,
+      },
+      {
+        name: 'core_version',
+        description: 'OpenET core library version',
+        type: ee_const.var_type.string,
+      },
+      {
+        name: 'end_date',
+        description: 'End date of month',
+        type: ee_const.var_type.string,
+      },
+      {
+        name: 'mgrs_tile',
+        description: 'MGRS grid zone ID',
+        type: ee_const.var_type.string,
+      },
+      {
+        name: 'start_date',
+        description: 'Start date of month',
+        type: ee_const.var_type.string,
+      },
+    ],
     gsd: [30],
     'eo:bands': [
       {

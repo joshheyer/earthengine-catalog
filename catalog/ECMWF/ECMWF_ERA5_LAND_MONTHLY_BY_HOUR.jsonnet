@@ -41,12 +41,10 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     within every day and gets reset on midnight. The Earth Engine Data team added 19 additional bands,
     one for each of the accumulation bands, with the hourly values computed as the difference
     between two consecutive forecast steps.
-
-    ERA5-Land data is available from 1950 to three months from real-time. More information
-    can be found at the [Copernicus Climate Data Store](https://cds.climate.copernicus.eu).
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['climate'],
   keywords: [
     'cds',
     'climate',
@@ -875,11 +873,11 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     Please acknowledge the use of ERA5-Land as stated in the
     [Copernicus C3S/CAMS License agreement](https://apps.ecmwf.int/datasets/licences/copernicus/):
 
-    - 5.1.2 Where the Licensee communicates or distributes Copernicus Products to the public, the
+    - 5.1.1 Where the Licensee communicates or distributes Copernicus Products to the public, the
     Licensee shall inform the recipients of the source by using the following or any similar notice:
     'Generated using Copernicus Climate Change Service Information [Year]'.
 
-    - 5.1.3 Where the Licensee makes or contributes to a publication or distribution containing
+    - 5.1.2 Where the Licensee makes or contributes to a publication or distribution containing
     adapted or modified Copernicus Products, the Licensee shall provide the following or any similar
     notice: 'Contains modified Copernicus Climate Change Service Information [Year]';
 

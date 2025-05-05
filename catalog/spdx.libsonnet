@@ -17,14 +17,19 @@
   proprietary: {
     id: 'proprietary',
     name: 'Non-standard license',
-    reference: 'DO NOT USE THIS - use a custom URL',
+    reference: 'Use a custom URL for the non-standard license',
+  },
+  proprietary_non_commercial: {
+    id: 'proprietary_non_commercial',
+    name: 'Non-standard and non-commercial license',
+    reference: 'Use a custom URL for the non-standard license',
   },
   // "Various" indicates that multiple licenses apply to the data. It is
   // recommended to put the details in gee:terms_of_use.
   various: {
     id: 'various',
     name: 'Various licenses',
-    reference: 'DO NOT USE THIS - use a custom URL',
+    reference: 'Use a custom URL for the multiple licenses',
   },
   cc_by_4_0: {
     id: 'CC-BY-4.0',

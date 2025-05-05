@@ -1,7 +1,5 @@
 """Tests for feature_view."""
 
-from unittest import mock
-
 from checker import stac
 from checker import test_utils
 from checker.node import feature_view
@@ -10,12 +8,6 @@ from absl.testing import absltest
 IMAGE_COLLECTION = stac.GeeType.IMAGE_COLLECTION
 TABLE = stac.GeeType.TABLE
 TABLE_COLLECTION = stac.GeeType.TABLE_COLLECTION
-
-FEATUREVIEW_EXCEPTION_ID = 'AN/EXCEPTION'
-
-
-def mock_table_without_featureview_exception(dataset_id: str) -> bool:
-  return dataset_id == FEATUREVIEW_EXCEPTION_ID
 
 
 class ValidFeatureViewTest(test_utils.NodeTest):
@@ -26,22 +18,36 @@ class ValidFeatureViewTest(test_utils.NodeTest):
 
   def test_valid_density_desc(self):
     self.assert_collection(
-        {'summaries': {'gee:feature_view_ingestion_params': {
-            'max_features_per_tile': 150,
-            'thinning_strategy': 'HIGHER_DENSITY',
-            'thinning_ranking': ['BurnBndAc DESC'],
-            'z_order_ranking': ['BurnBndAc DESC'],
-            'prerender_tiles': True}}},
-        gee_type=TABLE)
+        {
+            'summaries': {
+                'gee:schema': [{'name': 'BurnBndAc'}],
+                'gee:feature_view_ingestion_params': {
+                    'max_features_per_tile': 150,
+                    'thinning_strategy': 'HIGHER_DENSITY',
+                    'thinning_ranking': ['BurnBndAc DESC'],
+                    'z_order_ranking': ['BurnBndAc DESC'],
+                    'prerender_tiles': True,
+                },
+            }
+        },
+        gee_type=TABLE,
+    )
 
   def test_valid_global_asc(self):
     self.assert_collection(
-        {'summaries': {'gee:feature_view_ingestion_params': {
-            'max_features_per_tile': 16000,
-            'thinning_strategy': 'GLOBALLY_CONSISTENT',
-            'thinning_ranking': ['rttyp ASC'],
-            'z_order_ranking': ['rttyp ASC']}}},
-        gee_type=TABLE)
+        {
+            'summaries': {
+                'gee:schema': [{'name': 'rttyp'}],
+                'gee:feature_view_ingestion_params': {
+                    'max_features_per_tile': 16000,
+                    'thinning_strategy': 'GLOBALLY_CONSISTENT',
+                    'thinning_ranking': ['rttyp ASC'],
+                    'z_order_ranking': ['rttyp ASC'],
+                },
+            }
+        },
+        gee_type=TABLE,
+    )
 
   def test_valid_dot_field(self):
     self.assert_collection(
@@ -53,10 +59,22 @@ class ValidFeatureViewTest(test_utils.NodeTest):
 
   def test_valid_list_len_2(self):
     self.assert_collection(
-        {'summaries': {'gee:feature_view_ingestion_params': {
-            'thinning_ranking': ['prop1 DESC', 'prop2 ASC'],
-            'z_order_ranking': ['prop3 ASC', 'prop4 DESC']}}},
-        gee_type=TABLE)
+        {
+            'summaries': {
+                'gee:schema': [
+                    {'name': 'prop1'},
+                    {'name': 'prop2'},
+                    {'name': 'prop3'},
+                    {'name': 'prop4'},
+                ],
+                'gee:feature_view_ingestion_params': {
+                    'thinning_ranking': ['prop1 DESC', 'prop2 ASC'],
+                    'z_order_ranking': ['prop3 ASC', 'prop4 DESC'],
+                },
+            }
+        },
+        gee_type=TABLE,
+    )
 
   def test_no_summaries(self):
     self.assert_collection({}, gee_type=TABLE)
@@ -102,18 +120,6 @@ class ErrorFeatureViewTest(test_utils.NodeTest):
     self.assert_collection(
         {'summaries': {}},
         'gee:feature_view_ingestion_params must be present in table',
-        gee_type=TABLE)
-
-  @mock.patch.object(
-      feature_view, 'table_without_featureview_exception',
-      mock_table_without_featureview_exception)
-  def test_in_tables_without_featureview_but_has_featureview_params(self):
-    self.assert_collection(
-        {'summaries': {
-            'gee:feature_view_ingestion_params': {'prerender_tiles': True}}},
-        'AN/EXCEPTION is in the list of tables without feature views, '
-        'but gee:feature_view_ingestion_params is present',
-        dataset_id=FEATUREVIEW_EXCEPTION_ID,
         gee_type=TABLE)
 
   def test_params_not_dict(self):
@@ -206,21 +212,32 @@ class ErrorFeatureViewTest(test_utils.NodeTest):
         'thinning_ranking must be "<field> ASC|DESC',
         gee_type=TABLE)
 
-  def test_thinning_ranking_name(self):
+  def test_thinning_ranking_bad_name(self):
     self.assert_collection(
-        {'summaries': {
-            'gee:feature_view_ingestion_params': {
-                'thinning_ranking': ['i DESC']}}},
-        'Invalid property_name: "i"',
-        gee_type=TABLE)
+        {
+            'summaries': {
+                'gee:feature_view_ingestion_params': {
+                    'thinning_ranking': ['foo DESC']
+                }
+            }
+        },
+        'thinning_ranking property_name "foo" not found in the schema',
+        gee_type=TABLE,
+    )
 
   def test_thinning_ranking_direction(self):
     self.assert_collection(
-        {'summaries': {
-            'gee:feature_view_ingestion_params': {
-                'thinning_ranking': ['id ASCENDING']}}},
+        {
+            'summaries': {
+                'gee:schema': [{'name': 'id'}],
+                'gee:feature_view_ingestion_params': {
+                    'thinning_ranking': ['id ASCENDING']
+                },
+            }
+        },
         'thinning_ranking direction must be one of ASC, DESC',
-        gee_type=TABLE)
+        gee_type=TABLE,
+    )
 
   def test_z_order_ranking_not_list(self):
     self.assert_collection(
@@ -259,21 +276,32 @@ class ErrorFeatureViewTest(test_utils.NodeTest):
         'z_order_ranking must be "<field> ASC|DESC',
         gee_type=TABLE)
 
-  def test_z_order_ranking_name(self):
+  def test_z_order_ranking_bad_name(self):
     self.assert_collection(
-        {'summaries': {
-            'gee:feature_view_ingestion_params': {
-                'z_order_ranking': ['i DESC']}}},
-        'Invalid property_name: "i"',
-        gee_type=TABLE)
+        {
+            'summaries': {
+                'gee:feature_view_ingestion_params': {
+                    'z_order_ranking': ['foo DESC']
+                }
+            }
+        },
+        'z_order_ranking property_name "foo" not found in the schema',
+        gee_type=TABLE,
+    )
 
   def test_z_order_ranking_direction(self):
     self.assert_collection(
-        {'summaries': {
-            'gee:feature_view_ingestion_params': {
-                'z_order_ranking': ['id DESCENDING']}}},
+        {
+            'summaries': {
+                'gee:schema': [{'name': 'id'}],
+                'gee:feature_view_ingestion_params': {
+                    'z_order_ranking': ['id DESCENDING']
+                },
+            }
+        },
         'z_order_ranking direction must be one of ASC, DESC',
-        gee_type=TABLE)
+        gee_type=TABLE,
+    )
 
   def test_prerender_tiles_not_str(self):
     self.assert_collection(
@@ -317,10 +345,9 @@ class ErrorFeatureViewTest(test_utils.NodeTest):
 
   def test_skip_featureview_generation_without_params_ok(self):
     self.assert_collection(
-        {'gee:skip_featureview_generation': True,
-         'summaries': {}},
-        ['gee:feature_view_ingestion_params must be present in table'],
-        gee_type=TABLE)
+        {'gee:skip_featureview_generation': True, 'summaries': {}},
+        gee_type=TABLE,
+    )
 
   def test_skip_featureview_generation_must_be_bool(self):
     self.assert_collection(

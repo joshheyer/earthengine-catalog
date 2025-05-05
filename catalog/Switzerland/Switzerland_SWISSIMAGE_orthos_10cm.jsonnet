@@ -26,8 +26,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     10 cm in the plains and the main alpine valleys and 25 cm in the Alps. It
     is updated annually.
 
-    For more information, please see the [SWISSIMAGE10cm_FR documentation]
-    (https://www.swisstopo.admin.ch/content/swisstopo-internet/fr/geodata/images/ortho/swissimage10/_jcr_content/contentPar/tabs_copy_copy/items/60_1569482292365/tabPar/downloadlist/downloadItems/67_1588752711524.download/Produktinfo_SWISSIMAGE10cm_FR.pdf)
+    For more information, please see the
+    [SWISSIMAGE10cm_FR documentation](https://backend.swisstopo.admin.ch/fileservice/sdweb-docs-prod-swisstopoch-files/files/2023/11/14/a84642dc-5feb-48e5-af6b-55df4ae7a10b.pdf)
 
     This RGB collection contains digital aerial images with three bands.
     Standard deviation for the precision in position: +/- 0.15 m for the ground
@@ -35,8 +35,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['orthophotos'],
   keywords: [
-    'orthophoto',
     'rgb',
     'swissimage',
     'swisstopo'
@@ -48,7 +48,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ),
     ee.host_provider(self_ee_catalog_url),
   ],
-  extent: ee.extent(45.8, 5.9, 47.8, 10.6,
+  extent: ee.extent(5.9, 45.8, 10.6, 47.8,
                     '2017-01-01T00:00:00Z', '2021-01-01T00:00:00Z'),
   summaries: {
     gsd: [0.1],
@@ -74,7 +74,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ],
     'gee:visualizations': [{
       display_name: 'Switzerland RGB (10 cm)',
-      lookat: {lon: 46.3, lat: 7.4, zoom: 19},
+      lookat: {lon: 7.4, lat: 46.3, zoom: 19},
       image_visualization: {
         band_vis: {
           min: [11],
@@ -95,6 +95,6 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
 
     A reference to the source is mandatory.
     please see the [Terms of use](
-    https://www.swisstopo.admin.ch/en/home/meta/conditions/geodata/ogd.html)
+    https://www.swisstopo.admin.ch/en/terms-and-conditions)
   |||,
 }

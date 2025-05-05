@@ -102,6 +102,12 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     - Indent 2 spaces under the |||.
   |||,
 
+
+  // One or more category keywords. For the current list, see
+  // https://github.com/google/earthengine-catalog/blob/main/checker/node/gee_categories.py
+  // All categories will also be added as keywords.
+  'gee:categories': ['climate', 'soil'],
+
   // Please look through the list of existing keywords and pick two or more
   // that match the dataset.
   // https://developers.google.com/earth-engine/datasets/tags
@@ -276,14 +282,12 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
 
   // The fields below generally don't need to be changed.
 
-  // TODO(simonf): Remove skip_indexing when the dataset is ready.
-  'gee:skip_indexing': true,
+  // TODO(google): Remove gee:status when the dataset is ready.
+  'gee:status': 'incomplete',
 
   // This says that the dataset is an ee.Image.
   //   https://developers.google.com/earth-engine/apidocs/ee-image
   'gee:type': ee_const.gee_type.image,
-
-  'gee:user_uploaded': true,
 
   // Files should use this line as-is. There is a local license variable at
   // the top of the file that sets the SPDX license entry.

@@ -45,7 +45,7 @@ local COPERNICUS_S5P = import 'COPERNICUS_S5P.libsonnet';
     being used for generating the operational total ozone products from GOME,
     SCIAMACHY and GOME-2; while GODFIT is being used in the ESA CCI and the
     Copernicus C3S projects.
-    [More information](http://www.tropomi.eu/data-products/total-ozone-column).
+    [More information.](http://www.tropomi.eu/data-products/total-ozone-column)
     [Product user manual](https://sentinel.esa.int/documents/247904/2474726/Sentinel-5P-Level-2-Product-User-Manual-Ozone-Total-Column)
 
     ### OFFL L3 Product
@@ -87,6 +87,7 @@ local COPERNICUS_S5P = import 'COPERNICUS_S5P.libsonnet';
   ||| + s5p_desc,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['atmosphere'],
   keywords: [
     'air_quality',
     'copernicus',
@@ -203,9 +204,9 @@ local COPERNICUS_S5P = import 'COPERNICUS_S5P.libsonnet';
       {
         name: 'SPATIAL_RESOLUTION',
         description: |||
-          Spatial resolution at nadir. For most products this is `3.5x7km2`,
+          Spatial resolution at nadir. For most products this is `3.5x7 km2`,
           except for `L2__O3__PR`, which uses `28x21km2`, and
-          `L2__CO____` and `L2__CH4___`, which both use `7x7km2`.
+          `L2__CO____` and `L2__CH4___`, which both use `7x7 km2`.
           This attribute originates from the CCI standard.
         |||,
         type: ee_const.var_type.string,

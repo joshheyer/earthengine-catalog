@@ -27,7 +27,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     All bands are upsampled using bilinear interpolation to 10m resolution
     before the gradient boost base algorithm is applied.  The resulting
     `0..1` floating point probability is scaled to `0..100` and stored as
-    a UINT8.  Areas missing any or all of the bands are masked out.
+    an UINT8.  Areas missing any or all of the bands are masked out.
     Higher values are more likely to be clouds or highly reflective surfaces
     (e.g. roof tops or snow).
 
@@ -37,8 +37,8 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     as well as observation of inland waterways and coastal areas.
 
     The Level-2 data can be found in the collection
-    [COPERNICUS/S2_SR](COPERNICUS_S2_SR).  The Level-1B data can be found in the collection
-    [COPERNICUS/S2](COPERNICUS_S2).  Additional metadata is available on assets in those
+    [COPERNICUS/S2_SR_HARMONIZED](COPERNICUS_S2_SR_HARMONIZED).  The Level-1B data can be found in the collection
+    [COPERNICUS/S2_HARMONIZED](COPERNICUS_S2_HARMONIZED).  Additional metadata is available on assets in those
     collections.
 
     See
@@ -47,6 +47,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['satellite-imagery'],
   keywords: [
     'cloud',
     'copernicus',
@@ -61,7 +62,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     ee.producer_provider('European Union/ESA/Copernicus/SentinelHub', 'https://sentinel.esa.int/web/sentinel/user-guides/sentinel-2-msi/processing-levels/level-1'),
     ee.host_provider(self_ee_catalog_url),
   ],
-  extent: ee.extent(-180.0, -56.0, 180.0, 83.0, '2015-06-23T00:00:00Z', null),
+  extent: ee.extent(-180.0, -56.0, 180.0, 83.0, '2015-06-27T00:00:00Z', null),
   summaries: {
     platform: [
       'Sentinel-2A',

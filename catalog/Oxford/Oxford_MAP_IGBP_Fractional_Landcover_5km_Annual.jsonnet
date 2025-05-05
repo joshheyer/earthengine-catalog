@@ -35,6 +35,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
   |||,
   license: license.id,
   links: ee.standardLinks(subdir, id),
+  'gee:categories': ['landuse-landcover'],
   keywords: [
     'igbp',
     'landcover',
@@ -42,7 +43,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'oxford',
   ],
   providers: [
-    ee.producer_provider('Oxford Malaria Atlas Project', 'https://www.bdi.ox.ac.uk/research/malaria-atlas-project'),
+    ee.producer_provider('Oxford Malaria Atlas Project', 'https://malariaatlas.org/'),
     ee.host_provider(self_ee_catalog_url),
   ],
   extent: ee.extent_global('2001-01-01T00:00:00Z', '2013-01-01T00:00:00Z'),

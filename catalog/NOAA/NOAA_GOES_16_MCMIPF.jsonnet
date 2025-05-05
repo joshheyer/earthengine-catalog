@@ -32,6 +32,10 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     Top-Of-Atmosphere (TOA) is measured in Kelvin. These bands support the characterization of the
     surface, clouds, water vapor, ozone, volcanic ash, and dust based on emissive properties.
 
+    Formerly known as "GOES East"; replaced by
+    [GOES-19](https://developers.google.com/earth-engine/datasets/catalog/NOAA_GOES_19_MCMIPF)
+    as of April 7, 2025.
+
     [README](https://www.ncei.noaa.gov/products/satellite/goes-r-series)
   ||| + importstr 'general_satellite_messages_description.md',
   license: license.id,
@@ -41,9 +45,9 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
       href: 'https://console.cloud.google.com/storage/browser/gcp-public-data-goes-16/ABI-L2-MCMIPF/',
     },
   ],
+  'gee:categories': ['atmosphere', 'satellite-imagery'],
   keywords: [
     'abi',
-    'climate',
     'goes',
     'goes_16',
     'goes_east',
@@ -55,7 +59,7 @@ local self_ee_catalog_url = ee_const.ee_catalog_url + basename;
     'weather',
   ],
   providers: [
-    ee.producer_provider('NOAA', 'https://data.noaa.gov/dataset/dataset/noaa-goes-r-series-advanced-baseline-imager-abi-level-2-cloud-and-moisture-imagery-products-cmi1'),
+    ee.producer_provider('NOAA', 'https://data.noaa.gov/onestop/collections/details/385d4d38-267e-40c1-859d-b5d8a079c5df'),
     ee.host_provider(self_ee_catalog_url),
   ],
   extent: ee.extent_global('2017-07-10T00:00:00Z', null),

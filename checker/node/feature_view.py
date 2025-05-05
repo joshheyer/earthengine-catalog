@@ -67,7 +67,6 @@ Jsonnet examples:
 
 # TODO(schwehr): Check gee:visualizations visualize_as
 
-import re
 from typing import Iterator
 
 from checker import stac
@@ -85,24 +84,6 @@ MAX_FEATURES_RANGE = [150, 16000]
 
 THINNING_STRATEGIES = frozenset({'GLOBALLY_CONSISTENT', 'HIGHER_DENSITY'})
 DIRECTIONS = frozenset({'ASC', 'DESC'})
-
-TABLES_WITHOUT_FEATUREVIEW = frozenset({
-    'WWF/HydroATLAS/v1/Basins/level03',
-    'WWF/HydroATLAS/v1/Basins/level04',
-    'WWF/HydroATLAS/v1/Basins/level05',
-    'WWF/HydroATLAS/v1/Basins/level06',
-    'WWF/HydroATLAS/v1/Basins/level07',
-    'WWF/HydroATLAS/v1/Basins/level08',
-    'WWF/HydroATLAS/v1/Basins/level09',
-    'WWF/HydroATLAS/v1/Basins/level10',
-    'WWF/HydroATLAS/v1/Basins/level11',
-    'WWF/HydroATLAS/v1/Basins/level12',
-})
-
-
-# Use a function to allow a mock during testing.
-def table_without_featureview_exception(dataset_id: str) -> bool:
-  return dataset_id in TABLES_WITHOUT_FEATUREVIEW
 
 
 class Check(stac.NodeCheck):
@@ -137,14 +118,6 @@ class Check(stac.NodeCheck):
             f'in {node.gee_type}')
       return
 
-    if GEE_FEATURE_VIEW_INGESTION_PARAMS not in summaries:
-      if not table_without_featureview_exception(node.id):
-        yield cls.new_issue(
-            node,
-            f'{GEE_FEATURE_VIEW_INGESTION_PARAMS} must be present '
-            f'in {node.gee_type}')
-      return
-
     if stac.SKIP_FEATUREVIEW_GENERATION in node.stac:
       skip = node.stac[stac.SKIP_FEATUREVIEW_GENERATION]
       if not isinstance(skip, bool):
@@ -153,11 +126,15 @@ class Check(stac.NodeCheck):
       elif not skip:
         yield cls.new_issue(
             node, f'{stac.SKIP_FEATUREVIEW_GENERATION} cannot be false')
-    if table_without_featureview_exception(node.id):
+      return
+
+    if GEE_FEATURE_VIEW_INGESTION_PARAMS not in summaries:
       yield cls.new_issue(
           node,
-          f'{node.id} is in the list of tables without feature views, but '
-          f'{GEE_FEATURE_VIEW_INGESTION_PARAMS} is present')
+          f'{GEE_FEATURE_VIEW_INGESTION_PARAMS} must be present '
+          f'in {node.gee_type}',
+      )
+      return
 
     params = summaries[GEE_FEATURE_VIEW_INGESTION_PARAMS]
     if not isinstance(params, dict):
@@ -192,6 +169,10 @@ class Check(stac.NodeCheck):
             f'{THINNING_STRATEGY} must be one of ' +
             ', '.join(sorted(THINNING_STRATEGIES)))
 
+    property_names = [
+        x['name'] for x in node.stac[SUMMARIES].get('gee:schema', {})
+    ] + ['.geometryType', '.minZoomLevel']
+
     if THINNING_RANKING in params:
       rankings = params[THINNING_RANKING]
       if not isinstance(rankings, list):
@@ -213,15 +194,17 @@ class Check(stac.NodeCheck):
                 node, f'{THINNING_RANKING} must be "<field> ASC|DESC')
           else:
             property_name, direction = fields
-            if not re.fullmatch('[.a-zA-Z][_a-zA-Z0-9]{1,49}', property_name):
-              yield cls.new_issue(
-                  node, f'Invalid property_name: "{property_name}"')
             if direction not in DIRECTIONS:
               yield cls.new_issue(
                   node,
                   f'{THINNING_RANKING} direction must be one of ' +
                   ', '.join(sorted(DIRECTIONS)))
-            # TODO(schwehr): Make sure the property_name is in the schema.
+            if property_name not in property_names:
+              yield cls.new_issue(
+                  node,
+                  f'{THINNING_RANKING} property_name "{property_name}" '
+                  'not found in the schema',
+              )
 
     if Z_ORDER_RANKING in params:
       rankings = params[Z_ORDER_RANKING]
@@ -244,16 +227,17 @@ class Check(stac.NodeCheck):
                 node, f'{Z_ORDER_RANKING} must be "<field> ASC|DESC')
           else:
             property_name, direction = fields
-            # Can start with a fullstop: .minZoomLevel
-            if not re.fullmatch('[.a-zA-Z][_a-zA-Z0-9]{1,49}', property_name):
-              yield cls.new_issue(
-                  node, f'Invalid property_name: "{property_name}"')
             if direction not in DIRECTIONS:
               yield cls.new_issue(
                   node,
                   f'{Z_ORDER_RANKING} direction must be one of ' +
                   ', '.join(sorted(DIRECTIONS)))
-            # TODO(schwehr): Make sure the property_name is in the schema.
+            if property_name not in property_names:
+              yield cls.new_issue(
+                  node,
+                  f'{Z_ORDER_RANKING} property_name "{property_name}" '
+                  'not found in the schema',
+              )
 
     if PRERENDER_TILES in params:
       prerender = params[PRERENDER_TILES]
